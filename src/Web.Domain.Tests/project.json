@@ -17,7 +17,8 @@
   },
 
   "commands": {
-    "tests": "Web.Domain.Tests"
+    "RunLocaly": "Web.Domain.Tests --test=Web.Domain.Tests.SimpleValuesProviderTests.ShouldReturnValueFromConfiguration2 --wait",
+    "RunRemotely": "Web.Domain.Tests --teamcity"
   },
 
   "frameworks": {
