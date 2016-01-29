@@ -17,3 +17,4 @@ _UpgradeReport*
 *.ncrunchproject
 *.ncrunchsolution
 /.vs/
+/src/Web.Domain.Tests/TestResult.xml
