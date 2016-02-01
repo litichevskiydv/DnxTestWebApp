@@ -1,7 +1,7 @@
 FROM microsoft/aspnet:1.0.0-rc1-final
 
 COPY . /app/
-WORKDIR /app
+WORKDIR /app/Web
 RUN ["dnu", "restore"]
 
 EXPOSE 5004

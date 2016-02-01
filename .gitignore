@@ -18,3 +18,4 @@ _UpgradeReport*
 *.ncrunchsolution
 /.vs/
 /src/Web.Domain.Tests/TestResult.xml
+/artifacts
