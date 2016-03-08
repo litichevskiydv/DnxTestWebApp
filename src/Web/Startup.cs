@@ -9,8 +9,12 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Autofac.Extensions.DependencyInjection;
+    using NLog.Extensions.Logging;
+    using NLog.Web;
     using Domain.ValuesProvider;
+    using JetBrains.Annotations;
 
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -39,7 +43,7 @@
                 .AddOptions()
                 .Configure<ValuesControllerConfiguration>(Configuration);
 
-            services.AddMvc(); //services.AddMvc(x=>x.Conventions.Insert(0, new RouteConvention(Configuration.GetSection("AppSettings")["ApiPreffix"])));
+            services.AddMvc();
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<SimpleValuesProvider>().As<IValuesProvider>().SingleInstance();
@@ -50,9 +54,9 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory
-                .AddConsole(Configuration.GetSection("Logging"))
-                .AddDebug();
+            loggerFactory.AddNLog();
+            app.AddNLogWeb();
+            env.ConfigureNLog("nlog.config");
 
             app
                 .UseIISPlatformHandler()
