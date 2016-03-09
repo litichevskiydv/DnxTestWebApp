@@ -8,7 +8,7 @@ namespace Web
     {
         private readonly AttributeRouteModel _centralPrefix;
 
-        public RouteConvention(string preffix)
+        public RouteConvention(string preffix = null)
         {
             _centralPrefix = new AttributeRouteModel(new RouteAttribute(
                 (string.IsNullOrEmpty(preffix) == false

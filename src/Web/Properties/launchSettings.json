@@ -3,22 +3,32 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:19411/",
+      "applicationUrl": "http://localhost:19411/api/values",
       "sslPort": 0
     }
   },
   "profiles": {
     "DNX Dev": {
-      "commandName": "dev"
+      "commandName": "dev",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5004/api/values",
+      "environmentVariables": {
+        "VIRTUAL_PATH": "/api"
+      }
     },
     "DNX Staging": {
-      "commandName": "staging"
+      "commandName": "staging",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:5004/api/values",
+      "environmentVariables": {
+        "VIRTUAL_PATH": "/api"
+      }
     },
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
       "environmentVariables": {
-        "Hosting:Environment": "Development"
+        "Hosting:Environment": "Development",
+        "VIRTUAL_PATH": "/api"
       }
     }
   }

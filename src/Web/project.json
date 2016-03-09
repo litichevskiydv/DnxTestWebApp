@@ -36,7 +36,7 @@
   },
 
   "commands": {
-    "dev": "Microsoft.AspNet.Server.Kestrel --ASPNET_ENV Development",
+    "dev": "Microsoft.AspNet.Server.Kestrel --server.urls http://*:5004 --ASPNET_ENV Development",
     "staging": "Microsoft.AspNet.Server.Kestrel --server.urls http://*:5004 --ASPNET_ENV Staging"
   },
 

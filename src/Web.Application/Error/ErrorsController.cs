@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNet.Mvc;
 
-    [Route("[controller]")]
     public class ErrorsController : Controller
     {
         [HttpGet("Error500")]

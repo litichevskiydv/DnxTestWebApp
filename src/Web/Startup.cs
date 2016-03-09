@@ -39,7 +39,7 @@
                 .AddOptions()
                 .Configure<ValuesControllerConfiguration>(Configuration);
 
-            services.AddMvc(); //services.AddMvc(x=>x.Conventions.Insert(0, new RouteConvention(Configuration.GetSection("AppSettings")["ApiPreffix"])));
+            services.AddMvc(x => x.Conventions.Add(new RouteConvention()));
 
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterType<SimpleValuesProvider>().As<IValuesProvider>().SingleInstance();
@@ -48,7 +48,7 @@
             return container.Resolve<IServiceProvider>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        private void ConfigureInternal(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory
                 .AddConsole(Configuration.GetSection("Logging"))
@@ -70,6 +70,12 @@
             app.UseStatusCodePagesWithReExecute("/Errors/Error{0}");
 
             app.UseMvc();
+        }
+
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        {
+            var virtualPath = Environment.GetEnvironmentVariable("VIRTUAL_PATH") ?? "/api";
+            app.Map(virtualPath,  x => ConfigureInternal(x, env, loggerFactory));
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
