@@ -12,6 +12,7 @@
     using NLog.Extensions.Logging;
     using NLog.Web;
     using Domain.ValuesProvider;
+    using Infrastructure.NLog;
     using JetBrains.Annotations;
 
     [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
@@ -21,7 +22,8 @@
         {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json");
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
+                .AddNLogConfig("nlog.config");
 
             if (env.IsDevelopment())
                 builder.AddApplicationInsightsSettings(true);
@@ -54,9 +56,8 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddNLog();
+            loggerFactory.AddNLog(Configuration);
             app.AddNLogWeb();
-            env.ConfigureNLog("nlog.config");
 
             app
                 .UseIISPlatformHandler()
