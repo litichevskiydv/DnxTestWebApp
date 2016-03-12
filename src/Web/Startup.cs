@@ -9,15 +9,21 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Autofac.Extensions.DependencyInjection;
+    using NLog.Extensions.Logging;
+    using NLog.Web;
     using Domain.ValuesProvider;
+    using Infrastructure.NLog;
+    using JetBrains.Annotations;
 
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class Startup
     {
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json");
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
+                .AddNLogConfig("nlog.config");
 
             if (env.IsDevelopment())
                 builder.AddApplicationInsightsSettings(true);
@@ -50,9 +56,8 @@
 
         private void ConfigureInternal(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory
-                .AddConsole(Configuration.GetSection("Logging"))
-                .AddDebug();
+            loggerFactory.AddNLog(Configuration);
+            app.AddNLogWeb();
 
             app
                 .UseIISPlatformHandler()

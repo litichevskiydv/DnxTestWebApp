@@ -18,7 +18,10 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
     "Web.Domain": "1.0.0-*",
-    "Web.Application" : "1.0.0-*"
+    "Web.Application": "1.0.0-*",
+    "NLog.Extensions.Logging": "1.0.0-rc1-final-2016-02-06",
+    "NLog.Web.ASPNET5": "4.2.1",
+    "JetBrains.Annotations": "10.1.2-eap"
   },
 
   "configurations": {
