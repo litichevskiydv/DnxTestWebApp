@@ -79,8 +79,11 @@
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            var virtualPath = Environment.GetEnvironmentVariable("VIRTUAL_PATH") ?? "/api";
-            app.Map(virtualPath,  x => ConfigureInternal(x, env, loggerFactory));
+            var virtualPath = Environment.GetEnvironmentVariable("VIRTUAL_PATH");
+            if (string.IsNullOrEmpty(virtualPath) == false)
+                app.Map(virtualPath, x => ConfigureInternal(x, env, loggerFactory));
+            else
+                ConfigureInternal(app, env, loggerFactory);
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
