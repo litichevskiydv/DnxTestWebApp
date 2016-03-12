@@ -9,9 +9,9 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Autofac.Extensions.DependencyInjection;
-    using NLog.Extensions.Logging;
     using NLog.Web;
     using Domain.ValuesProvider;
+    using Infrastructure.Conventions;
     using Infrastructure.NLog;
     using JetBrains.Annotations;
 

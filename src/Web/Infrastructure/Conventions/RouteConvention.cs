@@ -1,4 +1,4 @@
-namespace Web
+namespace Web.Infrastructure.Conventions
 {
     using System.Linq;
     using Microsoft.AspNet.Mvc;
