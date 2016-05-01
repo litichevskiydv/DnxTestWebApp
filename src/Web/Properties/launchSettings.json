@@ -14,7 +14,8 @@
       "launchUrl": "http://localhost:5004/api/values",
       "environmentVariables": {
         "VIRTUAL_PATH": "/api"
-      }
+      },
+      "sdkVersion": "dnx-coreclr-win-x64.1.0.0-rc1-update2"
     },
     "DNX Staging": {
       "commandName": "staging",
@@ -27,8 +28,8 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "environmentVariables": {
-        "Hosting:Environment": "Development",
-        "VIRTUAL_PATH": "/api"
+        "VIRTUAL_PATH": "/api",
+        "Hosting:Environment": "Development"
       }
     }
   }
