@@ -23,8 +23,7 @@
         public static ILoggerFactory AddNLog(this ILoggerFactory factory, IConfigurationRoot configuration)
         {
             LogManager.AddHiddenAssembly(typeof (AspNetExtensions).GetTypeInfo().Assembly);
-            using (var nlogLoggerProvider = new NLogLoggerProvider())
-                factory.AddProvider(nlogLoggerProvider);
+            factory.AddProvider(new NLogLoggerProvider());
             LogManager.Configuration = new XmlLoggingConfiguration(configuration[NLogConfigurationPathKey], true);
             return factory;
         }
