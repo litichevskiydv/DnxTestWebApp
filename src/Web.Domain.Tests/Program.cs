@@ -3,15 +3,14 @@
     using System;
     using NUnitLite;
     using System.Reflection;
+    using NUnit.Common;
+
     public class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
-#if DNX451
-            new AutoRun().Execute(args);
-#else
-        new AutoRun().Execute(typeof(Program).GetTypeInfo().Assembly, Console.Out, Console.In, args);
-#endif
+            return new AutoRun(typeof(Program).GetTypeInfo().Assembly)
+                .Execute(args, new ExtendedTextWrapper(Console.Out), Console.In);
         }
     }
 }

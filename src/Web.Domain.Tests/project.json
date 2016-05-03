@@ -11,14 +11,13 @@
   },
 
   "dependencies": {
-    "NUnit": "3.0.1",
-    "NUnitLite": "3.0.1",
+    "NUnitLite": "3.2.1",
     "Web.Domain": "1.0.0-*"
   },
 
   "commands": {
     "RunLocaly": "Web.Domain.Tests --test=Web.Domain.Tests.SimpleValuesProviderTests.ShouldReturnValueFromConfiguration2 --wait",
-    "RunRemotely": "Web.Domain.Tests --teamcity"
+    "RunRemotely": "Web.Domain.Tests"
   },
 
   "frameworks": {
