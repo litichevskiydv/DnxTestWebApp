@@ -12,6 +12,7 @@
     using NLog.Web;
     using Domain.ValuesProvider;
     using Infrastructure.Conventions;
+    using Infrastructure.ExceptionsHandling;
     using Infrastructure.NLog;
     using JetBrains.Annotations;
 
@@ -56,14 +57,6 @@
 
         private void ConfigureInternal(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddNLog(Configuration);
-            app.AddNLogWeb();
-
-            app
-                .UseIISPlatformHandler()
-                .UseApplicationInsightsRequestTelemetry()
-                .UseApplicationInsightsExceptionTelemetry();
-
             if (env.IsDevelopment())
                 app
                     .UseDeveloperExceptionPage()
@@ -72,18 +65,34 @@
             else
                 app.UseExceptionHandler("/Errors/Error500");
 
-            app.UseStatusCodePagesWithReExecute("/Errors/Error{0}");
-
-            app.UseMvc();
+            app
+                .UseStatusCodePagesWithReExecute("/Errors/Error{0}")
+                .UseMvc();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddNLog(Configuration);
+            app.AddNLogWeb();
+
+            app
+                .UseIISPlatformHandler()
+                .UseApplicationInsightsRequestTelemetry()
+                .UseApplicationInsightsExceptionTelemetry()
+                .UseApiExceptionResponse(env.IsDevelopment() || env.IsStaging());
+
             var virtualPath = Environment.GetEnvironmentVariable("VIRTUAL_PATH");
             if (string.IsNullOrEmpty(virtualPath) == false)
                 app.Map(virtualPath, x => ConfigureInternal(x, env, loggerFactory));
             else
                 ConfigureInternal(app, env, loggerFactory);
+
+            app.Map("/throw", throwApp => throwApp.Run(context =>
+                                                       {
+                                                           throw new Exception("Test Exception",
+                                                               new Exception("Test Inner Exception",
+                                                                   new Exception("Test Inner Inner Exception")));
+                                                       }));
         }
 
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
